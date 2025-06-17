@@ -28,7 +28,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-black text-black dark:text-white tracking-tight">
                 FIRMENSTROM
               </h1>
             </Link>
@@ -39,10 +39,10 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-none text-sm font-medium transition-all duration-200 border-b-2 ${
                   isActivePage(item.href)
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted border-transparent hover:border-muted-foreground'
                 }`}
               >
                 {item.name}
@@ -58,7 +58,7 @@ const Header = () => {
             <ThemeToggle />
             <Button 
               asChild
-              className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white"
+              className="bg-black hover:bg-gray-800 text-white rounded-none font-bold border-2 border-black hover:border-gray-800"
             >
               <Link to="/contact">Kostenlose Beratung</Link>
             </Button>
@@ -82,10 +82,10 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`px-3 py-2 rounded-none text-sm font-medium transition-all duration-200 border-l-4 ${
                     isActivePage(item.href)
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted border-transparent hover:border-muted-foreground'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -94,7 +94,7 @@ const Header = () => {
               ))}
               <Button 
                 asChild
-                className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white mt-4"
+                className="bg-black hover:bg-gray-800 text-white rounded-none font-bold border-2 border-black hover:border-gray-800 mt-4"
               >
                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
                   Kostenlose Beratung
