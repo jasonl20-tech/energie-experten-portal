@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from './ThemeToggle';
+import AdminButton from './AdminButton';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,6 +57,7 @@ const Header = () => {
               <span>0800 123 4567</span>
             </div>
             <ThemeToggle />
+            <AdminButton />
             <Button 
               asChild
               className="bg-black hover:bg-gray-800 text-white rounded-none font-bold border-2 border-black hover:border-gray-800"
@@ -92,14 +94,17 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <Button 
-                asChild
-                className="bg-black hover:bg-gray-800 text-white rounded-none font-bold border-2 border-black hover:border-gray-800 mt-4"
-              >
-                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-                  Kostenlose Beratung
-                </Link>
-              </Button>
+              <div className="pt-2 space-y-2">
+                <AdminButton />
+                <Button 
+                  asChild
+                  className="bg-black hover:bg-gray-800 text-white rounded-none font-bold border-2 border-black hover:border-gray-800 w-full"
+                >
+                  <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                    Kostenlose Beratung
+                  </Link>
+                </Button>
+              </div>
             </nav>
           </div>
         )}
