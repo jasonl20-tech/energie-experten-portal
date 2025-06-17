@@ -1,51 +1,74 @@
 
-import { Phone, Mail, Menu, X } from 'lucide-react';
+import { Phone, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ThemeToggle } from './ThemeToggle';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const navigation = [
+    { name: 'Home', href: '/' },
+    { name: 'Leistungen', href: '/services' },
+    { name: 'Über uns', href: '/about' },
+    { name: 'Kontakt', href: '/contact' },
+  ];
+
+  const isActivePage = (href: string) => {
+    if (href === '/' && location.pathname === '/') return true;
+    if (href !== '/' && location.pathname.startsWith(href)) return true;
+    return false;
+  };
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+    <header className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
+            <Link to="/" className="flex-shrink-0">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                StromProfi
+                FIRMENSTROM
               </h1>
-            </div>
+            </Link>
           </div>
           
-          <nav className="hidden md:flex space-x-8">
-            <a href="#services" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-              Leistungen
-            </a>
-            <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-              Über uns
-            </a>
-            <a href="#benefits" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-              Vorteile
-            </a>
-            <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-              Kontakt
-            </a>
+          <nav className="hidden md:flex space-x-1">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  isActivePage(item.href)
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
           </nav>
           
           <div className="hidden md:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <Phone className="h-4 w-4" />
               <span>0800 123 4567</span>
             </div>
-            <button className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all duration-300 font-medium">
-              Kostenlose Beratung
-            </button>
+            <ThemeToggle />
+            <Button 
+              asChild
+              className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white"
+            >
+              <Link to="/contact">Kostenlose Beratung</Link>
+            </Button>
           </div>
           
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-blue-600"
+              className="text-muted-foreground hover:text-foreground"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -53,23 +76,30 @@ const Header = () => {
         </div>
         
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100">
-            <nav className="flex flex-col space-y-4">
-              <a href="#services" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                Leistungen
-              </a>
-              <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                Über uns
-              </a>
-              <a href="#benefits" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                Vorteile
-              </a>
-              <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                Kontakt
-              </a>
-              <button className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all duration-300 font-medium w-full">
-                Kostenlose Beratung
-              </button>
+          <div className="md:hidden py-4 border-t border-border">
+            <nav className="flex flex-col space-y-2">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActivePage(item.href)
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <Button 
+                asChild
+                className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white mt-4"
+              >
+                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                  Kostenlose Beratung
+                </Link>
+              </Button>
             </nav>
           </div>
         )}
